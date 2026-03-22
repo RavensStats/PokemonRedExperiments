@@ -9,6 +9,8 @@ from stable_baselines3.common.vec_env import SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.callbacks import CheckpointCallback, CallbackList
 from tensorboard_callback import TensorboardCallback
+from tqdm import tqdm
+from stable_baselines3.common.callbacks import BaseCallback
 
 def make_env(rank, env_conf, seed=0):
     """
@@ -42,14 +44,14 @@ if __name__ == "__main__":
 
     env_config = {
                 'headless': True, 'save_final_state': False, 'early_stop': False,
-                'action_freq': 24, 'init_state': '../init.state', 'max_steps': ep_length, 
+                'action_freq': 24, 'init_state': 'init.state', 'max_steps': ep_length, 
                 'print_rewards': True, 'save_video': False, 'fast_video': True, 'session_path': sess_path,
-                'gb_path': '../PokemonRed.gb', 'debug': False, 'reward_scale': 0.5, 'explore_weight': 0.25
+                'gb_path': 'PokemonRed.gb', 'debug': False, 'reward_scale': 0.5, 'explore_weight': 0.25
             }
     
     print(env_config)
     
-    num_cpu = 64 # Also sets the number of episodes per training iteration
+    num_cpu = 4 # Also sets the number of episodes per training iteration
     env = SubprocVecEnv([make_env(i, env_config) for i in range(num_cpu)])
     
     checkpoint_callback = CheckpointCallback(save_freq=ep_length//2, save_path=sess_path,
@@ -82,20 +84,46 @@ if __name__ == "__main__":
 
     train_steps_batch = ep_length // 64
     
+    import torch
+    device = "cpu" #"cuda" if torch.cuda.is_available() else "cpu"
+    print(f"Using device for training: {device}")
     if exists(file_name + ".zip"):
         print("\nloading checkpoint")
-        model = PPO.load(file_name, env=env)
+        model = PPO.load(file_name, env=env, device=device)
         model.n_steps = train_steps_batch
         model.n_envs = num_cpu
         model.rollout_buffer.buffer_size = train_steps_batch
         model.rollout_buffer.n_envs = num_cpu
         model.rollout_buffer.reset()
     else:
-        model = PPO("MultiInputPolicy", env, verbose=1, n_steps=train_steps_batch, batch_size=512, n_epochs=1, gamma=0.997, ent_coef=0.01, tensorboard_log=sess_path)
+        model = PPO("MultiInputPolicy", env, verbose=1, n_steps=train_steps_batch, batch_size=512, n_epochs=1, gamma=0.997, ent_coef=0.01, tensorboard_log=sess_path, device=device)
     
     print(model.policy)
 
-    model.learn(total_timesteps=(ep_length)*num_cpu*10000, callback=CallbackList(callbacks), tb_log_name="poke_ppo")
+    total_timesteps = (ep_length) * num_cpu * 10000
+    class TqdmProgressCallback(BaseCallback):
+        def __init__(self, total_timesteps, verbose=0):
+            super().__init__(verbose)
+            self.total_timesteps = total_timesteps
+            self.progress = None
+            self.last_step = 0
+
+        def _on_training_start(self) -> None:
+            self.progress = tqdm(total=self.total_timesteps, desc="Training Progress", unit="step")
+            self.last_step = 0
+
+        def _on_step(self) -> bool:
+            current_step = self.model.num_timesteps
+            self.progress.update(current_step - self.last_step)
+            self.last_step = current_step
+            return True
+
+        def _on_training_end(self) -> None:
+            self.progress.close()
+            print(f"Training completed: {self.total_timesteps} steps.")
+
+    progress_callback = TqdmProgressCallback(total_timesteps)
+    model.learn(total_timesteps=total_timesteps, callback=CallbackList(callbacks + [progress_callback]), tb_log_name="poke_ppo")
 
     if use_wandb_logging:
         run.finish()

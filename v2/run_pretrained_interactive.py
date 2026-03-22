@@ -10,6 +10,8 @@ from stable_baselines3.common import env_checker
 from stable_baselines3.common.vec_env import DummyVecEnv, SubprocVecEnv
 from stable_baselines3.common.utils import set_random_seed
 from stable_baselines3.common.callbacks import CheckpointCallback
+from tqdm import tqdm
+
 
 def make_env(rank, env_conf, seed=0):
     """
@@ -50,19 +52,22 @@ if __name__ == '__main__':
 
     env_config = {
                 'headless': False, 'save_final_state': True, 'early_stop': False,
-                'action_freq': 24, 'init_state': '../init.state', 'max_steps': ep_length, 
+                'action_freq': 24, 'init_state': 'init.state', 'max_steps': ep_length, 
                 'print_rewards': True, 'save_video': False, 'fast_video': True, 'session_path': sess_path,
-                'gb_path': '../PokemonRed.gb', 'debug': False, 'sim_frame_dist': 2_000_000.0, 'extra_buttons': False
+                'gb_path': 'PokemonRed.gb', 'debug': False, 'sim_frame_dist': 2_000_000.0, 'extra_buttons': False
             }
     
     num_cpu = 1 #64 #46  # Also sets the number of episodes per training iteration
     env = make_env(0, env_config)() #SubprocVecEnv([make_env(i, env_config) for i in range(num_cpu)])
     
     #env_checker.check_env(env)
-    most_recent_checkpoint, time_since = get_most_recent_zip_with_age("runs")
+    most_recent_checkpoint, time_since = get_most_recent_zip_with_age("v2/runs")
     if most_recent_checkpoint is not None:
         file_name = most_recent_checkpoint
         print(f"using checkpoint: {file_name}, which is {time_since} hours old")
+    else:
+        print("No checkpoint found in 'runs' directory. Exiting.")
+        exit(1)
     
     # could optionally manually specify a checkpoint here
     #file_name = "runs/poke_41943040_steps.zip"
@@ -71,6 +76,7 @@ if __name__ == '__main__':
         
     #keyboard.on_press_key("M", toggle_agent)
     obs, info = env.reset()
+    progress = tqdm(total=env.max_steps, desc="Episode Progress", unit="step")
     while True:
         try:
             with open("agent_enabled.txt", "r") as f:
@@ -85,8 +91,11 @@ if __name__ == '__main__':
             obs = env._get_obs()
             truncated = env.step_count >= env.max_steps - 1
         env.render()
+        progress.update(1)
         if truncated:
+            print(f"Episode finished at step {env.step_count}/{env.max_steps}")
             break
+    progress.close()
     env.close()
 
 

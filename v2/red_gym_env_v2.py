@@ -80,7 +80,7 @@ class RedGymEnv(Env):
         ]
 
         # load event names (parsed from https://github.com/pret/pokered/blob/91dc3c9f9c8fd529bb6e8307b58b96efa0bec67e/constants/event_constants.asm)
-        with open("events.json") as f:
+        with open("v2/events.json") as f:
             event_names = json.load(f)
         self.event_names = event_names
 
@@ -520,8 +520,8 @@ class RedGymEnv(Env):
             "heal": self.reward_scale * self.total_healing_rew * 10,
             #"op_lvl": self.reward_scale * self.update_max_op_level() * 0.2,
             #"dead": self.reward_scale * self.died_count * -0.1,
-            "badge": self.reward_scale * self.get_badges() * 10,
-            "explore": self.reward_scale * self.explore_weight * len(self.seen_coords) * 0.1,
+            "badge": self.reward_scale * self.get_badges() * 100,
+            "explore": self.reward_scale * self.explore_weight * len(self.seen_coords) * 0.15,
             "stuck": self.reward_scale * self.get_current_coord_count_reward() * -0.05
         }
 
