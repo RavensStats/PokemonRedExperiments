@@ -19,6 +19,33 @@ event_flags_start = 0xD747
 event_flags_end = 0xD87E # expand for SS Anne # old - 0xD7F6 
 museum_ticket = (0xD754, 0)
 
+# Ordered game milestones: (address, mask, point_value)
+# Point values increase toward the end to incentivize full game completion.
+GAME_MILESTONES = [
+    (0xD74B, 0x04,  1),   # Starter Received
+    (0xD74B, 0x20,  2),   # Pokedex Received
+    (0xD755, 0x80,  3),   # Beat Brock (Gym 1)
+    (0xD7EB, 0x01,  4),   # Got SS Ticket
+    (0xD75E, 0x80,  5),   # Beat Misty (Gym 2)
+    (0xD772, 0x02,  6),   # Got HM01 Cut
+    (0xD773, 0x80,  7),   # Beat Lt. Surge (Gym 3)
+    (0xD7C2, 0x01,  8),   # Got HM05 Flash
+    (0xD77C, 0x02,  9),   # Beat Erika (Gym 4)
+    (0xD77E, 0x02, 10),   # Found Rocket Hideout
+    (0xD825, 0x20, 11),   # Got Silph Scope
+    (0xD768, 0x80, 12),   # Beat Marowak Ghost
+    (0xD76C, 0x01, 13),   # Got Poke Flute
+    (0xD792, 0x02, 14),   # Beat Koga (Gym 5)
+    (0xD790, 0x80, 15),   # Got HM03 Surf
+    (0xD838, 0x80, 16),   # Silph Co Liberated
+    (0xD7B3, 0x02, 17),   # Beat Sabrina (Gym 6)
+    (0xD796, 0x01, 18),   # Mansion Switch On
+    (0xD79A, 0x02, 19),   # Beat Blaine (Gym 7)
+    (0xD751, 0x02, 20),   # Beat Giovanni (Gym 8)
+    (0xD796, 0x1E, 21),   # Beat Elite Four (all 4 members)
+    (0xD796, 0x20, 22),   # Beat Champion
+]
+
 class RedGymEnv(Env):
     def __init__(self, config=None):
         self.s_path = config["session_path"]
@@ -147,6 +174,11 @@ class RedGymEnv(Env):
         self.died_count = 0
         self.party_size = 0
         self.step_count = 0
+        self.opponent_damage_reward = 0
+        self.last_opponent_hp = 0
+        self.prev_is_in_battle = 0
+        self.level_penalty_total = 0
+        self.max_game_completion_score = 0
 
         self.base_event_flags = sum([
                 self.bit_count(self.read_m(i))
@@ -213,6 +245,8 @@ class RedGymEnv(Env):
         self.update_explore_map()
 
         self.update_heal_reward()
+
+        self.update_battle_rewards()
 
         self.party_size = self.read_m(0xD163)
 
@@ -499,6 +533,20 @@ class RedGymEnv(Env):
             for addr in [0xD164, 0xD165, 0xD166, 0xD167, 0xD168, 0xD169]
         ]
 
+    def get_game_completion_score(self):
+        """Sum reward points for each achieved game milestone."""
+        return sum(
+            pts
+            for addr, mask, pts in GAME_MILESTONES
+            if (self.read_m(addr) & mask) == mask
+        )
+
+    def update_game_completion_rew(self):
+        """Track max game completion score (never decreases)."""
+        cur_score = self.get_game_completion_score()
+        self.max_game_completion_score = max(self.max_game_completion_score, cur_score)
+        return self.max_game_completion_score
+
     def get_all_events_reward(self):
         # adds up all event flags, exclude museum ticket
         return max(
@@ -522,7 +570,10 @@ class RedGymEnv(Env):
             #"dead": self.reward_scale * self.died_count * -0.1,
             "badge": self.reward_scale * self.get_badges() * 100,
             "explore": self.reward_scale * self.explore_weight * len(self.seen_coords) * 0.15,
-            "stuck": self.reward_scale * self.get_current_coord_count_reward() * -0.05
+            "stuck": self.reward_scale * self.get_current_coord_count_reward() * -0.05,
+            "op_damage": self.reward_scale * self.opponent_damage_reward * 2,
+            "level_pen": self.reward_scale * self.level_penalty_total * -0.5,
+            "game_progress": self.reward_scale * self.update_game_completion_rew() * 5,
         }
 
         return state_scores
@@ -553,6 +604,38 @@ class RedGymEnv(Env):
                 self.total_healing_rew += heal_amount * heal_amount
             else:
                 self.died_count += 1
+
+    def read_opponent_hp_fraction(self):
+        hp = self.read_hp(0xCFE6)       # wEnemyMonHP (2 bytes)
+        max_hp = self.read_hp(0xCFF4)   # wEnemyMonMaxHP (2 bytes)
+        max_hp = max(max_hp, 1)
+        return hp / max_hp
+
+    def update_battle_rewards(self):
+        """Track opponent HP damage reward and level penalty at battle start."""
+        is_in_battle = self.read_m(0xD057)
+
+        # Level penalty: fired once when a new battle begins
+        if is_in_battle and not self.prev_is_in_battle:
+            player_level = self.read_m(0xD18C)   # Party slot 0 level
+            enemy_level = self.read_m(0xCFF3)    # wEnemyMonLevel
+            if enemy_level > 0 and player_level <= enemy_level:
+                self.level_penalty_total += 1
+
+        # Opponent damage reward: accumulate HP loss dealt to current enemy
+        if is_in_battle:
+            cur_opp_hp = self.read_opponent_hp_fraction()
+            # Detect a new opponent (HP jumped up significantly)
+            if cur_opp_hp > self.last_opponent_hp + 0.3:
+                self.last_opponent_hp = cur_opp_hp
+            hp_decrease = self.last_opponent_hp - cur_opp_hp
+            if hp_decrease > 0:
+                self.opponent_damage_reward += hp_decrease
+                self.last_opponent_hp = cur_opp_hp
+        else:
+            self.last_opponent_hp = 0
+
+        self.prev_is_in_battle = is_in_battle
 
     def read_hp_fraction(self):
         hp_sum = sum([
