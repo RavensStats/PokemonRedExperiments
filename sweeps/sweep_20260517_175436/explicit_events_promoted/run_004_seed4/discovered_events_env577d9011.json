@@ -1,0 +1,42 @@
+{
+  "step": 84000,
+  "count": 6,
+  "events": [
+    {
+      "id": "bit:0xD74B:7",
+      "addr": 55115,
+      "bit": 7,
+      "first_step": 10612
+    },
+    {
+      "id": "bit:0xD747:0",
+      "addr": 55111,
+      "bit": 0,
+      "first_step": 10680
+    },
+    {
+      "id": "bit:0xD74B:0",
+      "addr": 55115,
+      "bit": 0,
+      "first_step": 10680
+    },
+    {
+      "id": "bit:0xD74B:1",
+      "addr": 55115,
+      "bit": 1,
+      "first_step": 10787
+    },
+    {
+      "id": "bit:0xD74B:2",
+      "addr": 55115,
+      "bit": 2,
+      "first_step": 11123
+    },
+    {
+      "id": "bit:0xD74B:3",
+      "addr": 55115,
+      "bit": 3,
+      "first_step": 14091
+    }
+  ]
+}

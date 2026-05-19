@@ -1,0 +1,152 @@
+COMMAND:
+C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\Scripts\python.exe v2\baseline_fast_v2.py --run-dir sweeps\sweep_20260517_175436\dynamic_no_promoted_in_rank\run_004_seed4 --seed 4 --num-cpu 4 --ep-length 163840 --total-timesteps 330000 --action-freq 24 --init-state init.state --gb-path PokemonRed.gb --device auto --reward-scale 0.5 --explore-weight 0.25 --batch-size 512 --n-epochs 1 --gamma 0.997 --ent-coef 0.01 --stream-user v2-default --stream-color #447799 --headless --stream --discovered-events --discovered-events-promoted-path  --discovered-events-reward-weight 0.5
+
+UserWarning: Using SDL2 binaries from pysdl2-dll 2.32.0
+{'headless': True, 'save_final_state': False, 'early_stop': False, 'action_freq': 24, 'init_state': 'init.state', 'max_steps': 163840, 'print_rewards': True, 'save_video': False, 'fast_video': True, 'session_path': WindowsPath('sweeps/sweep_20260517_175436/dynamic_no_promoted_in_rank/run_004_seed4'), 'gb_path': 'PokemonRed.gb', 'debug': False, 'reward_scale': 0.5, 'explore_weight': 0.25, 'discovered_events_enable': True, 'discovered_events_promoted_path': '', 'discovered_events_reward_weight': 0.5, 'discovered_events_flush_every': 500}
+Using device for training: cuda
+Using cuda device
+Wrapping the env in a VecTransposeImage.
+MultiInputActorCriticPolicy(
+  (features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (pi_features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (vf_features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (mlp_extractor): MlpExtractor(
+    (policy_net): Sequential(
+      (0): Linear(in_features=3038, out_features=64, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=64, out_features=64, bias=True)
+      (3): Tanh()
+    )
+    (value_net): Sequential(
+      (0): Linear(in_features=3038, out_features=64, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=64, out_features=64, bias=True)
+      (3): Tanh()
+    )
+  )
+  (action_net): Linear(in_features=64, out_features=7, bias=True)
+  (value_net): Linear(in_features=64, out_features=1, bias=True)
+)
+Logging to sweeps\sweep_20260517_175436\dynamic_no_promoted_in_rank\run_004_seed4\poke_ppo_1
+Training Progress:   0%|          | 0/330000 [00:00<?, ?step/s]pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.
+pyboy.core.mb                  WARNING  Loading state from an older version of PyBoy. This might cause compatibility issues.

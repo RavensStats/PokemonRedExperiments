@@ -1,0 +1,493 @@
+{
+  "created_at": "2026-05-18T10:29:47",
+  "seed_start": 0,
+  "runs_per_config": 20,
+  "configs": [
+    "base_no_events",
+    "explicit_events_promoted",
+    "dynamic_discovered_events",
+    "dynamic_no_promoted_in_rank"
+  ],
+  "runs": [
+    {
+      "config": "base_no_events",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_000_seed0"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_000_seed0"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_000_seed0"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_000_seed0"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 1,
+      "run_index": 1,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_001_seed1"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 1,
+      "run_index": 1,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_001_seed1"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 1,
+      "run_index": 1,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_001_seed1"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 1,
+      "run_index": 1,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_001_seed1"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 2,
+      "run_index": 2,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_002_seed2"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 2,
+      "run_index": 2,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_002_seed2"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 2,
+      "run_index": 2,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_002_seed2"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 2,
+      "run_index": 2,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_002_seed2"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 3,
+      "run_index": 3,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_003_seed3"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 3,
+      "run_index": 3,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_003_seed3"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 3,
+      "run_index": 3,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_003_seed3"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 3,
+      "run_index": 3,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_003_seed3"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 4,
+      "run_index": 4,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_004_seed4"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 4,
+      "run_index": 4,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_004_seed4"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 4,
+      "run_index": 4,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_004_seed4"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 4,
+      "run_index": 4,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_004_seed4"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 5,
+      "run_index": 5,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_005_seed5"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 5,
+      "run_index": 5,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_005_seed5"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 5,
+      "run_index": 5,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_005_seed5"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 5,
+      "run_index": 5,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_005_seed5"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 6,
+      "run_index": 6,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_006_seed6"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 6,
+      "run_index": 6,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_006_seed6"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 6,
+      "run_index": 6,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_006_seed6"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 6,
+      "run_index": 6,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_006_seed6"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 7,
+      "run_index": 7,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_007_seed7"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 7,
+      "run_index": 7,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_007_seed7"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 7,
+      "run_index": 7,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_007_seed7"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 7,
+      "run_index": 7,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_007_seed7"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 8,
+      "run_index": 8,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_008_seed8"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 8,
+      "run_index": 8,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_008_seed8"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 8,
+      "run_index": 8,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_008_seed8"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 8,
+      "run_index": 8,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_008_seed8"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 9,
+      "run_index": 9,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_009_seed9"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 9,
+      "run_index": 9,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_009_seed9"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 9,
+      "run_index": 9,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_009_seed9"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 9,
+      "run_index": 9,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_009_seed9"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 10,
+      "run_index": 10,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_010_seed10"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 10,
+      "run_index": 10,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_010_seed10"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 10,
+      "run_index": 10,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_010_seed10"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 10,
+      "run_index": 10,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_010_seed10"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 11,
+      "run_index": 11,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_011_seed11"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 11,
+      "run_index": 11,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_011_seed11"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 11,
+      "run_index": 11,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_011_seed11"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 11,
+      "run_index": 11,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_011_seed11"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 12,
+      "run_index": 12,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_012_seed12"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 12,
+      "run_index": 12,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_012_seed12"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 12,
+      "run_index": 12,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_012_seed12"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 12,
+      "run_index": 12,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_012_seed12"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 13,
+      "run_index": 13,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_013_seed13"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 13,
+      "run_index": 13,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_013_seed13"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 13,
+      "run_index": 13,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_013_seed13"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 13,
+      "run_index": 13,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_013_seed13"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 14,
+      "run_index": 14,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_014_seed14"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 14,
+      "run_index": 14,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_014_seed14"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 14,
+      "run_index": 14,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_014_seed14"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 14,
+      "run_index": 14,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_014_seed14"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 15,
+      "run_index": 15,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_015_seed15"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 15,
+      "run_index": 15,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_015_seed15"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 15,
+      "run_index": 15,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_015_seed15"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 15,
+      "run_index": 15,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_015_seed15"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 16,
+      "run_index": 16,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_016_seed16"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 16,
+      "run_index": 16,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_016_seed16"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 16,
+      "run_index": 16,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_016_seed16"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 16,
+      "run_index": 16,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_016_seed16"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 17,
+      "run_index": 17,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_017_seed17"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 17,
+      "run_index": 17,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_017_seed17"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 17,
+      "run_index": 17,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_017_seed17"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 17,
+      "run_index": 17,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_017_seed17"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 18,
+      "run_index": 18,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_018_seed18"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 18,
+      "run_index": 18,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_018_seed18"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 18,
+      "run_index": 18,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_018_seed18"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 18,
+      "run_index": 18,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_018_seed18"
+    },
+    {
+      "config": "base_no_events",
+      "seed": 19,
+      "run_index": 19,
+      "run_dir": "sweeps\\sweep_20260518_102947\\base_no_events\\run_019_seed19"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 19,
+      "run_index": 19,
+      "run_dir": "sweeps\\sweep_20260518_102947\\explicit_events_promoted\\run_019_seed19"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 19,
+      "run_index": 19,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_discovered_events\\run_019_seed19"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 19,
+      "run_index": 19,
+      "run_dir": "sweeps\\sweep_20260518_102947\\dynamic_no_promoted_in_rank\\run_019_seed19"
+    }
+  ]
+}

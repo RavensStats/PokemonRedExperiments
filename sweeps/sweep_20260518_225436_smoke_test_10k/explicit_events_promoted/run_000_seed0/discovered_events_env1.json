@@ -1,0 +1,12 @@
+{
+  "step": 5000,
+  "count": 1,
+  "events": [
+    {
+      "id": "bit:0xD74A:1",
+      "addr": 55114,
+      "bit": 1,
+      "first_step": 3211
+    }
+  ]
+}

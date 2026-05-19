@@ -1,0 +1,12 @@
+{
+  "started_at": "2026-05-16T10:25:54",
+  "ended_at": "2026-05-16T14:33:14",
+  "elapsed_seconds": 14839.344047307968,
+  "deadline": null,
+  "hours_budget": 0.0,
+  "terminate_at_deadline": false,
+  "max_parallel": 1,
+  "runs_requested": 10,
+  "runs_started": 10,
+  "runs_completed": 10
+}

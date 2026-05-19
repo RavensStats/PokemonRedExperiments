@@ -1,0 +1,105 @@
+{
+  "created_at": "2026-05-18T19:16:19",
+  "sweep_dir": "sweeps\\sweep_20260517_175436\\dynamic_discovered_events",
+  "summary_csv": "sweeps\\sweep_20260517_175436\\dynamic_discovered_events\\summary.csv",
+  "best_run_dir": "sweeps\\sweep_20260517_175436\\dynamic_discovered_events\\run_000_seed0",
+  "checkpoint": "sweeps\\sweep_20260517_175436\\dynamic_discovered_events\\run_000_seed0\\poke_327680_steps.zip",
+  "success_criteria": {
+    "badges_at_least": 1,
+    "milestone_score_at_least": -1,
+    "events_completed_at_least": -1,
+    "requires": "any"
+  },
+  "base_env_config": {
+    "headless": true,
+    "save_final_state": false,
+    "early_stop": false,
+    "action_freq": 24,
+    "init_state": "init.state",
+    "max_steps": 163840,
+    "print_rewards": true,
+    "save_video": false,
+    "fast_video": true,
+    "session_path": "sweeps\\sweep_20260517_175436\\dynamic_discovered_events\\run_000_seed0\\eval_jitter",
+    "gb_path": "PokemonRed.gb",
+    "debug": false,
+    "reward_scale": 0.5,
+    "explore_weight": 0.25,
+    "input_jitter_enable": true,
+    "input_jitter_prob": 0.0,
+    "input_jitter_mode": "lag",
+    "discovered_events_enable": false,
+    "discovered_events_promoted_path": "",
+    "discovered_events_reward_weight": 0.0,
+    "discovered_events_flush_every": 0
+  },
+  "eval": {
+    "deterministic": true,
+    "sweep": [
+      {
+        "jitter_prob": 0.1,
+        "jitter_mode": "lag",
+        "episodes": [
+          {
+            "episode": 0,
+            "steps": 163840,
+            "total_reward_delta": -0.006250000000000002,
+            "final_stats": {
+              "step": 163839,
+              "x": 3,
+              "y": 7,
+              "map": 38,
+              "max_map_progress": 0,
+              "last_action": 0,
+              "pcount": 0,
+              "levels": [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "levels_sum": 0,
+              "max_level": 0,
+              "ptypes": [
+                255,
+                0,
+                0,
+                0,
+                0,
+                0
+              ],
+              "hp": 0.0,
+              "coord_count": 1,
+              "explore_tiles": 1,
+              "explore_total_tiles": 94667,
+              "explore_pct": 0.0010563343086820117,
+              "deaths": 0,
+              "badge": 0,
+              "events_completed": 0,
+              "game_completion_score": 0,
+              "game_completion_max": 0,
+              "event": 0.0,
+              "healr": 0,
+              "discovered_event_count": 0,
+              "discovered_event_reward": 0.0,
+              "input_jitter_enable": 1,
+              "input_jitter_prob": 0.1,
+              "input_jitter_mode": "lag",
+              "input_jitter_count": 16470,
+              "requested_action": 0,
+              "applied_action": 0,
+              "input_jitter_applied": 1
+            },
+            "input_jitter_count": 16470,
+            "success": false
+          }
+        ],
+        "successes": 0,
+        "episodes_n": 1,
+        "success_rate": 0.0
+      }
+    ]
+  }
+}

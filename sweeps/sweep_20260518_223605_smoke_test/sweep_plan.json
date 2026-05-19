@@ -1,0 +1,37 @@
+{
+  "created_at": "2026-05-18T22:36:05",
+  "seed_start": 0,
+  "runs_per_config": 1,
+  "configs": [
+    "base_no_events",
+    "explicit_events_promoted",
+    "dynamic_discovered_events",
+    "dynamic_no_promoted_in_rank"
+  ],
+  "runs": [
+    {
+      "config": "base_no_events",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_223605_smoke_test\\base_no_events\\run_000_seed0"
+    },
+    {
+      "config": "explicit_events_promoted",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_223605_smoke_test\\explicit_events_promoted\\run_000_seed0"
+    },
+    {
+      "config": "dynamic_discovered_events",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_223605_smoke_test\\dynamic_discovered_events\\run_000_seed0"
+    },
+    {
+      "config": "dynamic_no_promoted_in_rank",
+      "seed": 0,
+      "run_index": 0,
+      "run_dir": "sweeps\\sweep_20260518_223605_smoke_test\\dynamic_no_promoted_in_rank\\run_000_seed0"
+    }
+  ]
+}

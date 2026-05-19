@@ -1,0 +1,28 @@
+{
+  "index": 0,
+  "seed": 0,
+  "run_dir": "sweeps\\sweep_20260516_102554\\run_000_seed0",
+  "started_at": "2026-05-16T10:25:54",
+  "train_args": {
+    "num_cpu": 4,
+    "ep_length": 163840,
+    "total_timesteps": 330000,
+    "train_steps_batch": 0,
+    "action_freq": 24,
+    "init_state": "init.state",
+    "gb_path": "PokemonRed.gb",
+    "headless": true,
+    "reward_scale": 0.5,
+    "explore_weight": 0.25,
+    "batch_size": 512,
+    "n_epochs": 1,
+    "gamma": 0.997,
+    "ent_coef": 0.01,
+    "device": "auto",
+    "stream": false,
+    "stream_user": "v2-default",
+    "stream_color": "#447799",
+    "stream_extra": "",
+    "wandb": false
+  }
+}

@@ -1,0 +1,153 @@
+COMMAND:
+C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\Scripts\python.exe v2\baseline_fast_v2.py --run-dir sweeps\sweep_20260518_223605_smoke_test\dynamic_discovered_events\run_000_seed0 --seed 0 --num-cpu 2 --ep-length 163840 --total-timesteps 1000 --action-freq 24 --init-state init.state --gb-path PokemonRed.gb --device cpu --reward-scale 0.5 --explore-weight 1.0 --batch-size 512 --n-epochs 1 --gamma 0.997 --ent-coef 0.05 --save-trajectory --trajectory-flush-every 10000 --stream-user v2-default --stream-color #447799 --headless --stream --discovered-events --discovered-events-reward-weight 0.5
+
+UserWarning: Using SDL2 binaries from pysdl2-dll 2.32.0
+{'headless': True, 'save_final_state': False, 'early_stop': False, 'action_freq': 24, 'init_state': 'init.state', 'max_steps': 163840, 'print_rewards': True, 'save_video': False, 'fast_video': True, 'session_path': WindowsPath('sweeps/sweep_20260518_223605_smoke_test/dynamic_discovered_events/run_000_seed0'), 'gb_path': 'PokemonRed.gb', 'debug': False, 'reward_scale': 0.5, 'explore_weight': 1.0, 'save_trajectory': True, 'trajectory_flush_every': 10000, 'discovered_events_enable': True, 'discovered_events_promoted_path': '', 'discovered_events_reward_weight': 0.5, 'discovered_events_flush_every': 500}
+Using device for training: cpu
+Using cpu device
+Wrapping the env in a VecTransposeImage.
+MultiInputActorCriticPolicy(
+  (features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (pi_features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (vf_features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (mlp_extractor): MlpExtractor(
+    (policy_net): Sequential(
+      (0): Linear(in_features=3038, out_features=64, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=64, out_features=64, bias=True)
+      (3): Tanh()
+    )
+    (value_net): Sequential(
+      (0): Linear(in_features=3038, out_features=64, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=64, out_features=64, bias=True)
+      (3): Tanh()
+    )
+  )
+  (action_net): Linear(in_features=64, out_features=7, bias=True)
+  (value_net): Linear(in_features=64, out_features=1, bias=True)
+)
+Logging to sweeps\sweep_20260518_223605_smoke_test\dynamic_discovered_events\run_000_seed0\poke_ppo_1
+Training Progress:   0%|          | 0/1000 [00:00<?, ?step/s]Training Progress:   1%|1         | 14/1000 [00:00<00:08, 116.74step/s]Training Progress:   3%|2         | 26/1000 [00:00<00:08, 117.09step/s]Training Progress:   4%|4         | 40/1000 [00:00<00:07, 123.56step/s]Training Progress:   5%|5         | 54/1000 [00:00<00:07, 124.46step/s]Training Progress:   7%|7         | 70/1000 [00:00<00:07, 131.18step/s]Training Progress:   9%|8         | 88/1000 [00:00<00:06, 142.63step/s]Training Progress:  10%|#         | 104/1000 [00:00<00:06, 142.42step/s]Training Progress:  12%|#2        | 122/1000 [00:00<00:05, 150.15step/s]Training Progress:  14%|#3        | 138/1000 [00:00<00:05, 149.19step/s]Training Progress:  15%|#5        | 154/1000 [00:01<00:05, 144.92step/s]Training Progress:  17%|#7        | 170/1000 [00:01<00:05, 142.30step/s]Training Progress:  19%|#8        | 186/1000 [00:01<00:05, 144.96step/s]Training Progress:  20%|##        | 202/1000 [00:01<00:06, 132.98step/s]Training Progress:  22%|##1       | 216/1000 [00:01<00:06, 119.15step/s]Training Progress:  23%|##3       | 230/1000 [00:01<00:06, 117.19step/s]Training Progress:  24%|##4       | 242/1000 [00:01<00:06, 112.64step/s]Training Progress:  26%|##5       | 256/1000 [00:01<00:06, 116.47step/s]Training Progress:  27%|##6       | 268/1000 [00:02<00:06, 115.99step/s]Training Progress:  28%|##8       | 280/1000 [00:02<00:06, 115.99step/s]Training Progress:  29%|##9       | 292/1000 [00:02<00:06, 116.35step/s]Training Progress:  31%|###       | 306/1000 [00:02<00:05, 117.07step/s]Training Progress:  32%|###2      | 320/1000 [00:02<00:05, 118.09step/s]Training Progress:  33%|###3      | 334/1000 [00:02<00:05, 118.88step/s]Training Progress:  35%|###4      | 348/1000 [00:02<00:05, 118.84step/s]Training Progress:  36%|###6      | 360/1000 [00:02<00:05, 116.44step/s]Training Progress:  37%|###7      | 374/1000 [00:02<00:05, 118.73step/s]Training Progress:  39%|###8      | 388/1000 [00:03<00:04, 123.77step/s]Training Progress:  40%|####      | 404/1000 [00:03<00:04, 131.61step/s]Training Progress:  42%|####2     | 420/1000 [00:03<00:04, 138.86step/s]Training Progress:  43%|####3     | 434/1000 [00:03<00:04, 136.44step/s]Training Progress:  45%|####4     | 448/1000 [00:03<00:04, 135.54step/s]Training Progress:  46%|####6     | 462/1000 [00:03<00:04, 129.50step/s]Training Progress:  48%|####7     | 478/1000 [00:03<00:03, 134.98step/s]Training Progress:  49%|####9     | 494/1000 [00:03<00:03, 139.99step/s]Training Progress:  51%|#####1    | 512/1000 [00:03<00:03, 146.73step/s]Training Progress:  53%|#####2    | 528/1000 [00:04<00:03, 147.98step/s]Training Progress:  55%|#####4    | 548/1000 [00:04<00:02, 161.85step/s]Training Progress:  57%|#####6    | 566/1000 [00:04<00:02, 163.01step/s]Training Progress:  58%|#####8    | 584/1000 [00:04<00:02, 143.97step/s]Training Progress:  60%|######    | 600/1000 [00:04<00:02, 137.01step/s]Training Progress:  62%|######1   | 616/1000 [00:04<00:02, 131.53step/s]Training Progress:  63%|######3   | 630/1000 [00:04<00:02, 133.64step/s]Training Progress:  65%|######4   | 646/1000 [00:04<00:02, 136.90step/s]Training Progress:  66%|######6   | 662/1000 [00:05<00:02, 139.32step/s]Training Progress:  68%|######7   | 678/1000 [00:05<00:02, 137.58step/s]Training Progress:  69%|######9   | 694/1000 [00:05<00:02, 141.35step/s]Training Progress:  71%|#######1  | 710/1000 [00:05<00:02, 140.26step/s]Training Progress:  73%|#######2  | 726/1000 [00:05<00:01, 139.34step/s]Training Progress:  74%|#######4  | 740/1000 [00:05<00:01, 138.78step/s]Training Progress:  75%|#######5  | 754/1000 [00:05<00:01, 137.60step/s]Training Progress:  77%|#######7  | 770/1000 [00:05<00:01, 139.39step/s]Training Progress:  78%|#######8  | 784/1000 [00:05<00:01, 133.62step/s]Training Progress:  80%|########  | 800/1000 [00:06<00:01, 137.17step/s]Training Progress:  82%|########1 | 816/1000 [00:06<00:01, 138.63step/s]Training Progress:  83%|########2 | 830/1000 [00:06<00:01, 138.35step/s]Training Progress:  85%|########4 | 846/1000 [00:06<00:01, 139.85step/s]Training Progress:  86%|########6 | 862/1000 [00:06<00:00, 139.23step/s]Training Progress:  88%|########7 | 876/1000 [00:06<00:00, 136.41step/s]Training Progress:  89%|########9 | 890/1000 [00:06<00:00, 128.00step/s]Training Progress:  90%|######### | 904/1000 [00:06<00:00, 129.01step/s]Training Progress:  92%|#########1| 918/1000 [00:06<00:00, 130.19step/s]Training Progress:  93%|#########3| 932/1000 [00:07<00:00, 128.59step/s]Training Progress:  95%|#########4| 948/1000 [00:07<00:00, 136.54step/s]Training Progress:  96%|#########6| 962/1000 [00:07<00:00, 136.37step/s]Training Progress:  98%|#########7| 976/1000 [00:07<00:00, 134.47step/s]Training Progress:  99%|#########9| 992/1000 [00:07<00:00, 135.85step/s]Training Progress: 1006step [00:07, 133.31step/s]                       Training Progress: 1020step [00:07, 125.88step/s]Training Progress: 1034step [00:07, 121.87step/s]Training Progress: 1048step [00:07, 125.97step/s]Training Progress: 1062step [00:08, 124.85step/s]Training Progress: 1076step [00:08, 125.68step/s]Training Progress: 1092step [00:08, 132.97step/s]Training Progress: 1106step [00:08, 128.94step/s]Training Progress: 1120step [00:08, 120.54step/s]Training Progress: 1134step [00:08, 111.73step/s]Training Progress: 1146step [00:08, 107.97step/s]Training Progress: 1158step [00:08, 110.52step/s]Training Progress: 1172step [00:08, 117.55step/s]Training Progress: 1186step [00:09, 119.68step/s]Training Progress: 1202step [00:09, 130.09step/s]Training Progress: 1216step [00:09, 128.67step/s]Training Progress: 1232step [00:09, 136.81step/s]Training Progress: 1246step [00:09, 133.02step/s]Training Progress: 1262step [00:09, 137.66step/s]Training Progress: 1280step [00:09, 145.79step/s]Training Progress: 1296step [00:09, 140.63step/s]Training Progress: 1312step [00:09, 143.42step/s]Training Progress: 1328step [00:10, 147.13step/s]Training Progress: 1346step [00:10, 154.31step/s]Training Progress: 1362step [00:10, 151.31step/s]Training Progress: 1378step [00:10, 145.52step/s]Training Progress: 1394step [00:10, 141.21step/s]Training Progress: 1410step [00:10, 138.51step/s]Training Progress: 1426step [00:10, 138.46step/s]Training Progress: 1440step [00:10, 135.93step/s]Training Progress: 1456step [00:10, 140.35step/s]Training Progress: 1472step [00:11, 141.61step/s]Training Progress: 1488step [00:11, 141.32step/s]Training Progress: 1504step [00:11, 127.26step/s]Training Progress: 1518step [00:11, 123.17step/s]Training Progress: 1532step [00:11, 125.47step/s]Training Progress: 1548step [00:11, 129.80step/s]Training Progress: 1566step [00:11, 141.85step/s]Training Progress: 1582step [00:11, 138.60step/s]Training Progress: 1598step [00:11, 142.46step/s]Training Progress: 1614step [00:12, 136.98step/s]Training Progress: 1628step [00:12, 136.26step/s]Training Progress: 1642step [00:12, 132.43step/s]Training Progress: 1656step [00:12, 133.03step/s]Training Progress: 1670step [00:12, 132.51step/s]Training Progress: 1686step [00:12, 135.11step/s]Training Progress: 1702step [00:12, 139.48step/s]Training Progress: 1718step [00:12, 139.80step/s]Training Progress: 1732step [00:12, 139.01step/s]Training Progress: 1746step [00:13, 128.40step/s]Training Progress: 1760step [00:13, 129.07step/s]Training Progress: 1774step [00:13, 125.11step/s]Training Progress: 1788step [00:13, 122.93step/s]Training Progress: 1802step [00:13, 117.36step/s]Training Progress: 1814step [00:13, 107.88step/s]Training Progress: 1828step [00:13, 116.05step/s]Training Progress: 1842step [00:13, 121.05step/s]Training Progress: 1858step [00:14, 130.37step/s]Training Progress: 1872step [00:14, 126.78step/s]Training Progress: 1886step [00:14, 124.22step/s]Training Progress: 1900step [00:14, 123.46step/s]Training Progress: 1914step [00:14, 122.89step/s]Training Progress: 1928step [00:14, 127.05step/s]Training Progress: 1944step [00:14, 135.35step/s]Training Progress: 1962step [00:14, 142.21step/s]Training Progress: 1978step [00:14, 143.30step/s]Training Progress: 1996step [00:15, 150.51step/s]Training Progress: 2014step [00:15, 153.47step/s]Training Progress: 2030step [00:15, 153.63step/s]Training Progress: 2046step [00:15, 155.42step/s]Training Progress: 2062step [00:15, 145.61step/s]Training Progress: 2078step [00:15, 145.90step/s]Training Progress: 2094step [00:15, 140.28step/s]Training Progress: 2110step [00:15, 143.85step/s]Training Progress: 2126step [00:15, 133.65step/s]Training Progress: 2140step [00:16, 130.46step/s]Training Progress: 2154step [00:16, 127.99step/s]Training Progress: 2170step [00:16, 132.57step/s]Training Progress: 2184step [00:16, 130.38step/s]Training Progress: 2198step [00:16, 130.93step/s]Training Progress: 2212step [00:16, 132.59step/s]Training Progress: 2226step [00:16, 130.43step/s]Training Progress: 2244step [00:16, 139.92step/s]Training Progress: 2260step [00:16, 138.20step/s]Training Progress: 2274step [00:17, 132.93step/s]Training Progress: 2288step [00:17, 130.64step/s]Training Progress: 2302step [00:17, 127.47step/s]Training Progress: 2318step [00:17, 132.04step/s]Training Progress: 2332step [00:17, 132.70step/s]Training Progress: 2348step [00:17, 138.76step/s]Training Progress: 2364step [00:17, 139.77step/s]Training Progress: 2380step [00:17, 138.77step/s]Training Progress: 2396step [00:17, 140.78step/s]Training Progress: 2412step [00:18, 131.50step/s]Training Progress: 2426step [00:18, 125.09step/s]Training Progress: 2440step [00:18, 120.07step/s]Training Progress: 2454step [00:18, 121.39step/s]Training Progress: 2468step [00:18, 125.76step/s]Training Progress: 2484step [00:18, 133.04step/s]Training Progress: 2498step [00:18, 132.08step/s]Training Progress: 2512step [00:18, 133.27step/s]Training Progress: 2526step [00:19, 127.50step/s]Training Progress: 2540step [00:19, 125.33step/s]Training Progress: 2554step [00:19, 125.72step/s]Training Progress: 2568step [00:19, 118.67step/s]Training Progress: 2580step [00:19, 104.89step/s]Training Progress: 2592step [00:19, 91.61step/s] Training Progress: 2602step [00:19, 91.57step/s]Training Progress: 2612step [00:19, 89.72step/s]Training Progress: 2622step [00:20, 91.51step/s]Training Progress: 2632step [00:20, 91.22step/s]Training Progress: 2644step [00:20, 94.93step/s]Training Progress: 2656step [00:20, 101.28step/s]Training Progress: 2668step [00:20, 105.84step/s]Training Progress: 2680step [00:20, 96.00step/s] Training Progress: 2694step [00:20, 106.66step/s]Training Progress: 2710step [00:20, 116.60step/s]Training Progress: 2726step [00:20, 127.62step/s]Training Progress: 2742step [00:21, 135.14step/s]Training Progress: 2758step [00:21, 136.75step/s]Training Progress: 2774step [00:21, 138.56step/s]Training Progress: 2788step [00:21, 136.77step/s]Training Progress: 2804step [00:21, 140.11step/s]Training Progress: 2822step [00:21, 145.64step/s]Training Progress: 2840step [00:21, 153.64step/s]Training Progress: 2856step [00:21, 148.63step/s]Training Progress: 2872step [00:21, 147.63step/s]Training Progress: 2888step [00:22, 151.03step/s]Training Progress: 2904step [00:22, 145.35step/s]Training Progress: 2920step [00:22, 137.25step/s]Training Progress: 2936step [00:22, 139.50step/s]Training Progress: 2952step [00:22, 140.37step/s]Training Progress: 2968step [00:22, 142.39step/s]Training Progress: 2984step [00:22, 139.98step/s]Training Progress: 3000step [00:22, 137.50step/s]Training Progress: 3014step [00:22, 130.75step/s]Training Progress: 3028step [00:23, 133.18step/s]Training Progress: 3042step [00:23, 126.10step/s]Training Progress: 3058step [00:23, 132.92step/s]Training Progress: 3072step [00:23, 132.02step/s]Training Progress: 3086step [00:23, 131.91step/s]Training Progress: 3102step [00:23, 134.12step/s]Training Progress: 3118step [00:23, 139.56step/s]Training Progress: 3134step [00:23, 139.69step/s]Training Progress: 3150step [00:23, 138.35step/s]Training Progress: 3166step [00:24, 139.83step/s]Training Progress: 3182step [00:24, 141.63step/s]Training Progress: 3198step [00:24, 141.72step/s]Training Progress: 3214step [00:24, 141.80step/s]Training Progress: 3230step [00:24, 141.81step/s]Training Progress: 3246step [00:24, 143.65step/s]Training Progress: 3262step [00:24, 142.39step/s]Training Progress: 3278step [00:24, 141.23step/s]Training Progress: 3294step [00:24, 136.62step/s]Training Progress: 3308step [00:25, 134.63step/s]Training Progress: 3322step [00:25, 110.34step/s]Training Progress: 3334step [00:25, 83.17step/s] Training Progress: 3344step [00:25, 79.47step/s]Training Progress: 3356step [00:25, 86.48step/s]Training Progress: 3372step [00:25, 100.20step/s]Training Progress: 3384step [00:25, 104.17step/s]Training Progress: 3396step [00:26, 105.56step/s]Training Progress: 3408step [00:26, 109.03step/s]Training Progress: 3420step [00:26, 109.40step/s]Training Progress: 3432step [00:26, 108.77step/s]Training Progress: 3444step [00:26, 111.49step/s]Training Progress: 3458step [00:26, 117.26step/s]Training Progress: 3476step [00:26, 132.62step/s]Training Progress: 3492step [00:26, 136.64step/s]Training Progress: 3508step [00:26, 139.17step/s]Training Progress: 3524step [00:27, 141.87step/s]Training Progress: 3540step [00:27, 142.25step/s]Training Progress: 3556step [00:27, 147.13step/s]Training Progress: 3574step [00:27, 152.27step/s]Training Progress: 3590step [00:27, 145.27step/s]Training Progress: 3606step [00:27, 137.67step/s]Training Progress: 3620step [00:27, 132.89step/s]Training Progress: 3636step [00:27, 136.63step/s]Training Progress: 3650step [00:27, 135.84step/s]Training Progress: 3666step [00:28, 141.43step/s]Training Progress: 3682step [00:28, 140.81step/s]Training Progress: 3698step [00:28, 139.11step/s]Training Progress: 3714step [00:28, 141.68step/s]Training Progress: 3730step [00:28, 135.74step/s]Training Progress: 3744step [00:28, 136.06step/s]Training Progress: 3760step [00:28, 141.88step/s]Training Progress: 3776step [00:28, 137.92step/s]Training Progress: 3792step [00:28, 140.42step/s]Training Progress: 3808step [00:29, 141.39step/s]Training Progress: 3824step [00:29, 143.14step/s]Training Progress: 3840step [00:29, 143.15step/s]Training Progress: 3856step [00:29, 144.03step/s]Training Progress: 3872step [00:29, 134.06step/s]Training Progress: 3886step [00:29, 135.63step/s]Training Progress: 3900step [00:29, 134.61step/s]Training Progress: 3914step [00:29, 136.00step/s]Training Progress: 3928step [00:29, 134.43step/s]Training Progress: 3944step [00:30, 137.66step/s]Training Progress: 3958step [00:30, 137.06step/s]Training Progress: 3972step [00:30, 134.58step/s]Training Progress: 3986step [00:30, 135.19step/s]Training Progress: 4000step [00:30, 127.40step/s]Training Progress: 4014step [00:30, 129.86step/s]Training Progress: 4030step [00:30, 135.24step/s]Training Progress: 4044step [00:30, 133.70step/s]Training Progress: 4060step [00:30, 135.00step/s]Training Progress: 4074step [00:31, 129.08step/s]Training Progress: 4088step [00:31, 129.74step/s]Training Progress: 4102step [00:31, 131.53step/s]Training Progress: 4116step [00:31, 129.45step/s]Training Progress: 4130step [00:31, 126.71step/s]Training Progress: 4144step [00:31, 128.47step/s]Training Progress: 4158step [00:31, 120.05step/s]Training Progress: 4172step [00:31, 110.10step/s]Training Progress: 4186step [00:32, 114.15step/s]Training Progress: 4198step [00:32, 113.82step/s]Training Progress: 4212step [00:32, 116.00step/s]Training Progress: 4228step [00:32, 122.40step/s]Training Progress: 4244step [00:32, 130.37step/s]Training Progress: 4258step [00:32, 130.62step/s]Training Progress: 4274step [00:32, 136.84step/s]Training Progress: 4288step [00:32, 135.36step/s]Training Progress: 4302step [00:32, 128.68step/s]Training Progress: 4318step [00:33, 136.69step/s]Training Progress: 4332step [00:33, 130.26step/s]Training Progress: 4348step [00:33, 135.32step/s]Training Progress: 4366step [00:33, 143.13step/s]Training Progress: 4382step [00:33, 143.80step/s]Training Progress: 4398step [00:33, 141.62step/s]Training Progress: 4414step [00:33, 135.85step/s]Training Progress: 4428step [00:33, 133.28step/s]Training Progress: 4442step [00:33, 130.31step/s]Training Progress: 4456step [00:34, 131.59step/s]Training Progress: 4472step [00:34, 135.72step/s]Training Progress: 4486step [00:34, 133.70step/s]Training Progress: 4502step [00:34, 132.34step/s]Training Progress: 4516step [00:34, 124.68step/s]Training Progress: 4530step [00:34, 121.63step/s]Training Progress: 4544step [00:34, 123.31step/s]Training Progress: 4558step [00:34, 113.28step/s]Training Progress: 4570step [00:35, 109.35step/s]Training Progress: 4584step [00:35, 115.15step/s]Training Progress: 4596step [00:35, 115.24step/s]Training Progress: 4610step [00:35, 118.81step/s]Training Progress: 4624step [00:35, 120.20step/s]Training Progress: 4638step [00:35, 123.23step/s]Training Progress: 4654step [00:35, 131.77step/s]Training Progress: 4668step [00:35, 131.11step/s]Training Progress: 4684step [00:35, 137.90step/s]Training Progress: 4698step [00:35, 132.39step/s]Training Progress: 4716step [00:36, 142.37step/s]Training Progress: 4732step [00:36, 143.92step/s]Training Progress: 4748step [00:36, 141.87step/s]Training Progress: 4764step [00:36, 145.19step/s]Training Progress: 4780step [00:36, 138.75step/s]Training Progress: 4796step [00:36, 139.05step/s]Training Progress: 4810step [00:36, 127.24step/s]Training Progress: 4824step [00:36, 123.58step/s]Training Progress: 4838step [00:37, 118.59step/s]Training Progress: 4852step [00:37, 122.07step/s]Training Progress: 4866step [00:37, 124.14step/s]Training Progress: 4880step [00:37, 126.29step/s]Training Progress: 4894step [00:37, 115.39step/s]Training Progress: 4908step [00:37, 118.14step/s]Training Progress: 4922step [00:37, 122.11step/s]Training Progress: 4938step [00:37, 127.42step/s]Training Progress: 4954step [00:37, 134.44step/s]Training Progress: 4968step [00:38, 134.94step/s]Training Progress: 4982step [00:38, 135.49step/s]Training Progress: 4996step [00:38, 131.58step/s]Training Progress: 5012step [00:38, 136.75step/s]Training Progress: 5028step [00:38, 142.08step/s]Training Progress: 5044step [00:38, 145.82step/s]Training Progress: 5062step [00:38, 152.98step/s]Training Progress: 5080step [00:38, 154.47step/s]Training Progress: 5098step [00:38, 157.02step/s]Training Progress: 5114step [00:39, 157.64step/s]                                                 Training Progress: 5120step [00:39, 157.64step/s]-----------------------------
+| time/              |      |
+|    fps             | 130  |
+|    iterations      | 1    |
+|    time_elapsed    | 39   |
+|    total_timesteps | 5120 |
+-----------------------------
+Training Progress: 5120step [00:41, 122.92step/s]
+Training completed: 1000 steps.

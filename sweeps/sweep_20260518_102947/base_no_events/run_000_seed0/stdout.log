@@ -1,0 +1,200 @@
+COMMAND:
+C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\Scripts\python.exe v2\baseline_fast_v2.py --run-dir sweeps\sweep_20260518_102947\base_no_events\run_000_seed0 --seed 0 --num-cpu 4 --ep-length 163840 --total-timesteps 330000 --action-freq 24 --init-state init.state --gb-path PokemonRed.gb --device cpu --reward-scale 0.5 --explore-weight 0.25 --batch-size 512 --n-epochs 1 --gamma 0.997 --ent-coef 0.01 --stream-user v2-default --stream-color #447799 --headless --stream
+
+UserWarning: Using SDL2 binaries from pysdl2-dll 2.32.0
+{'headless': True, 'save_final_state': False, 'early_stop': False, 'action_freq': 24, 'init_state': 'init.state', 'max_steps': 163840, 'print_rewards': True, 'save_video': False, 'fast_video': True, 'session_path': WindowsPath('sweeps/sweep_20260518_102947/base_no_events/run_000_seed0'), 'gb_path': 'PokemonRed.gb', 'debug': False, 'reward_scale': 0.5, 'explore_weight': 0.25, 'discovered_events_enable': False, 'discovered_events_promoted_path': '', 'discovered_events_reward_weight': 0.0, 'discovered_events_flush_every': 500}
+Using device for training: cpu
+Using cpu device
+Wrapping the env in a VecTransposeImage.
+MultiInputActorCriticPolicy(
+  (features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (pi_features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (vf_features_extractor): CombinedExtractor(
+    (extractors): ModuleDict(
+      (badges): Flatten(start_dim=1, end_dim=-1)
+      (events): Flatten(start_dim=1, end_dim=-1)
+      (health): Flatten(start_dim=1, end_dim=-1)
+      (level): Flatten(start_dim=1, end_dim=-1)
+      (map): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(1, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=256, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+      (recent_actions): Flatten(start_dim=1, end_dim=-1)
+      (screens): NatureCNN(
+        (cnn): Sequential(
+          (0): Conv2d(3, 32, kernel_size=(8, 8), stride=(4, 4))
+          (1): ReLU()
+          (2): Conv2d(32, 64, kernel_size=(4, 4), stride=(2, 2))
+          (3): ReLU()
+          (4): Conv2d(64, 64, kernel_size=(3, 3), stride=(1, 1))
+          (5): ReLU()
+          (6): Flatten(start_dim=1, end_dim=-1)
+        )
+        (linear): Sequential(
+          (0): Linear(in_features=1920, out_features=256, bias=True)
+          (1): ReLU()
+        )
+      )
+    )
+  )
+  (mlp_extractor): MlpExtractor(
+    (policy_net): Sequential(
+      (0): Linear(in_features=3038, out_features=64, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=64, out_features=64, bias=True)
+      (3): Tanh()
+    )
+    (value_net): Sequential(
+      (0): Linear(in_features=3038, out_features=64, bias=True)
+      (1): Tanh()
+      (2): Linear(in_features=64, out_features=64, bias=True)
+      (3): Tanh()
+    )
+  )
+  (action_net): Linear(in_features=64, out_features=7, bias=True)
+  (value_net): Linear(in_features=64, out_features=1, bias=True)
+)
+Logging to sweeps\sweep_20260518_102947\base_no_events\run_000_seed0\poke_ppo_1
+Training Progress:   0%|          | 0/330000 [00:00<?, ?step/s]Training Progress:   0%|          | 12/330000 [00:00<52:13, 105.32step/s]Training Progress:   0%|          | 24/330000 [00:00<52:41, 104.36step/s]Training Progress:   0%|          | 36/330000 [00:00<54:37, 100.66step/s]Training Progress:   0%|          | 48/330000 [00:00<54:46, 100.39step/s]Training Progress:   0%|          | 60/330000 [00:00<56:08, 97.96step/s] Training Progress:   0%|          | 72/330000 [00:00<56:42, 96.98step/s]Training Progress:   0%|          | 84/330000 [00:00<54:36, 100.70step/s]Training Progress:   0%|          | 96/330000 [00:00<52:40, 104.37step/s]Training Progress:   0%|          | 112/330000 [00:01<47:34, 115.56step/s]Training Progress:   0%|          | 124/330000 [00:01<48:57, 112.30step/s]Training Progress:   0%|          | 136/330000 [00:01<49:36, 110.82step/s]Training Progress:   0%|          | 148/330000 [00:01<49:19, 111.46step/s]Training Progress:   0%|          | 168/330000 [00:01<42:35, 129.07step/s]Training Progress:   0%|          | 184/330000 [00:01<42:49, 128.33step/s]Training Progress:   0%|          | 200/330000 [00:01<42:43, 128.67step/s]Training Progress:   0%|          | 216/330000 [00:01<43:59, 124.95step/s]Training Progress:   0%|          | 232/330000 [00:01<41:05, 133.73step/s]Training Progress:   0%|          | 248/330000 [00:02<41:15, 133.18step/s]Training Progress:   0%|          | 264/330000 [00:02<48:06, 114.24step/s]Training Progress:   0%|          | 276/330000 [00:02<53:44, 102.24step/s]Training Progress:   0%|          | 288/330000 [00:02<1:11:57, 76.36step/s]Training Progress:   0%|          | 300/330000 [00:02<1:04:53, 84.68step/s]Training Progress:   0%|          | 316/330000 [00:02<57:32, 95.49step/s]  Training Progress:   0%|          | 332/330000 [00:03<52:25, 104.82step/s]Training Progress:   0%|          | 348/330000 [00:03<49:24, 111.21step/s]Training Progress:   0%|          | 364/330000 [00:03<47:23, 115.94step/s]Training Progress:   0%|          | 380/330000 [00:03<45:27, 120.85step/s]Training Progress:   0%|          | 396/330000 [00:03<44:46, 122.71step/s]Training Progress:   0%|          | 412/330000 [00:03<44:20, 123.89step/s]Training Progress:   0%|          | 428/330000 [00:03<45:38, 120.34step/s]Training Progress:   0%|          | 444/330000 [00:03<44:44, 122.78step/s]Training Progress:   0%|          | 460/330000 [00:04<44:57, 122.15step/s]Training Progress:   0%|          | 476/330000 [00:04<46:01, 119.31step/s]Training Progress:   0%|          | 492/330000 [00:04<45:12, 121.48step/s]Training Progress:   0%|          | 508/330000 [00:04<45:12, 121.45step/s]Training Progress:   0%|          | 524/330000 [00:04<45:29, 120.70step/s]Training Progress:   0%|          | 540/330000 [00:04<55:32, 98.86step/s] Training Progress:   0%|          | 552/330000 [00:04<53:33, 102.51step/s]Training Progress:   0%|          | 564/330000 [00:05<52:55, 103.76step/s]Training Progress:   0%|          | 576/330000 [00:05<51:02, 107.58step/s]Training Progress:   0%|          | 588/330000 [00:05<50:18, 109.12step/s]Training Progress:   0%|          | 600/330000 [00:05<51:36, 106.39step/s]Training Progress:   0%|          | 616/330000 [00:05<49:16, 111.41step/s]Training Progress:   0%|          | 632/330000 [00:05<47:30, 115.53step/s]Training Progress:   0%|          | 644/330000 [00:05<49:18, 111.32step/s]Training Progress:   0%|          | 656/330000 [00:05<49:49, 110.17step/s]Training Progress:   0%|          | 668/330000 [00:05<48:56, 112.16step/s]Training Progress:   0%|          | 680/330000 [00:06<49:04, 111.86step/s]Training Progress:   0%|          | 692/330000 [00:06<48:06, 114.10step/s]Training Progress:   0%|          | 704/330000 [00:06<55:33, 98.77step/s] Training Progress:   0%|          | 720/330000 [00:06<50:33, 108.56step/s]Training Progress:   0%|          | 736/330000 [00:06<48:04, 114.17step/s]Training Progress:   0%|          | 752/330000 [00:06<46:53, 117.04step/s]Training Progress:   0%|          | 768/330000 [00:06<47:03, 116.60step/s]Training Progress:   0%|          | 784/330000 [00:07<46:03, 119.11step/s]Training Progress:   0%|          | 796/330000 [00:07<46:13, 118.68step/s]Training Progress:   0%|          | 808/330000 [00:07<47:36, 115.23step/s]Training Progress:   0%|          | 820/330000 [00:07<47:14, 116.12step/s]Training Progress:   0%|          | 836/330000 [00:07<46:19, 118.42step/s]Training Progress:   0%|          | 852/330000 [00:07<44:37, 122.95step/s]Training Progress:   0%|          | 868/330000 [00:07<45:14, 121.25step/s]Training Progress:   0%|          | 884/330000 [00:07<46:10, 118.81step/s]Training Progress:   0%|          | 900/330000 [00:07<43:31, 126.01step/s]Training Progress:   0%|          | 916/330000 [00:08<44:13, 124.02step/s]Training Progress:   0%|          | 932/330000 [00:08<44:32, 123.11step/s]Training Progress:   0%|          | 948/330000 [00:08<44:48, 122.39step/s]Training Progress:   0%|          | 964/330000 [00:08<43:36, 125.73step/s]Training Progress:   0%|          | 980/330000 [00:08<42:56, 127.70step/s]Training Progress:   0%|          | 996/330000 [00:08<42:22, 129.40step/s]Training Progress:   0%|          | 1012/330000 [00:08<43:09, 127.03step/s]Training Progress:   0%|          | 1028/330000 [00:09<45:53, 119.48step/s]Training Progress:   0%|          | 1044/330000 [00:09<45:15, 121.12step/s]Training Progress:   0%|          | 1060/330000 [00:09<44:15, 123.87step/s]Training Progress:   0%|          | 1076/330000 [00:09<43:04, 127.29step/s]Training Progress:   0%|          | 1092/330000 [00:09<45:10, 121.33step/s]Training Progress:   0%|          | 1108/330000 [00:09<42:21, 129.39step/s]Training Progress:   0%|          | 1124/330000 [00:09<43:23, 126.32step/s]Training Progress:   0%|          | 1140/330000 [00:09<43:31, 125.93step/s]Training Progress:   0%|          | 1156/330000 [00:10<43:23, 126.32step/s]Training Progress:   0%|          | 1172/330000 [00:10<44:22, 123.51step/s]Training Progress:   0%|          | 1188/330000 [00:10<44:12, 123.98step/s]Training Progress:   0%|          | 1204/330000 [00:10<48:37, 112.70step/s]Training Progress:   0%|          | 1220/330000 [00:10<46:27, 117.97step/s]Training Progress:   0%|          | 1236/330000 [00:10<44:05, 124.27step/s]Training Progress:   0%|          | 1252/330000 [00:10<43:19, 126.45step/s]Training Progress:   0%|          | 1268/330000 [00:10<48:21, 113.29step/s]Training Progress:   0%|          | 1280/330000 [00:11<48:24, 113.18step/s]Training Progress:   0%|          | 1296/330000 [00:11<48:32, 112.86step/s]Training Progress:   0%|          | 1316/330000 [00:11<43:19, 126.45step/s]Training Progress:   0%|          | 1332/330000 [00:11<43:17, 126.55step/s]Training Progress:   0%|          | 1348/330000 [00:11<47:12, 116.03step/s]Training Progress:   0%|          | 1360/330000 [00:11<49:28, 110.71step/s]Training Progress:   0%|          | 1372/330000 [00:11<49:25, 110.82step/s]Training Progress:   0%|          | 1384/330000 [00:12<55:09, 99.31step/s] Training Progress:   0%|          | 1396/330000 [00:12<53:07, 103.08step/s]Training Progress:   0%|          | 1408/330000 [00:12<52:50, 103.64step/s]Training Progress:   0%|          | 1424/330000 [00:12<48:43, 112.39step/s]Training Progress:   0%|          | 1440/330000 [00:12<47:44, 114.68step/s]Training Progress:   0%|          | 1456/330000 [00:12<46:17, 118.30step/s]Training Progress:   0%|          | 1468/330000 [00:12<46:13, 118.44step/s]Training Progress:   0%|          | 1484/330000 [00:12<45:29, 120.36step/s]Training Progress:   0%|          | 1500/330000 [00:12<43:38, 125.43step/s]Training Progress:   0%|          | 1516/330000 [00:13<43:40, 125.37step/s]Training Progress:   0%|          | 1532/330000 [00:13<41:24, 132.23step/s]Training Progress:   0%|          | 1548/330000 [00:13<40:16, 135.91step/s]Training Progress:   0%|          | 1564/330000 [00:13<40:03, 136.64step/s]Training Progress:   0%|          | 1580/330000 [00:13<41:50, 130.79step/s]Training Progress:   0%|          | 1596/330000 [00:13<41:47, 130.99step/s]Training Progress:   0%|          | 1612/330000 [00:13<40:33, 134.95step/s]Training Progress:   0%|          | 1628/330000 [00:13<39:51, 137.29step/s]Training Progress:   0%|          | 1644/330000 [00:14<40:36, 134.76step/s]Training Progress:   1%|          | 1660/330000 [00:14<43:37, 125.46step/s]Training Progress:   1%|          | 1676/330000 [00:14<44:31, 122.91step/s]Training Progress:   1%|          | 1692/330000 [00:14<44:36, 122.68step/s]Training Progress:   1%|          | 1708/330000 [00:14<45:26, 120.42step/s]Training Progress:   1%|          | 1724/330000 [00:14<44:24, 123.21step/s]Training Progress:   1%|          | 1740/330000 [00:14<44:58, 121.66step/s]Training Progress:   1%|          | 1756/330000 [00:14<43:48, 124.87step/s]Training Progress:   1%|          | 1772/330000 [00:15<43:47, 124.90step/s]Training Progress:   1%|          | 1788/330000 [00:15<44:09, 123.86step/s]Training Progress:   1%|          | 1804/330000 [00:15<43:11, 126.62step/s]Training Progress:   1%|          | 1820/330000 [00:15<41:22, 132.22step/s]Training Progress:   1%|          | 1836/330000 [00:15<42:32, 128.58step/s]Training Progress:   1%|          | 1852/330000 [00:15<43:03, 127.04step/s]Training Progress:   1%|          | 1868/330000 [00:15<43:14, 126.48step/s]Training Progress:   1%|          | 1884/330000 [00:15<40:57, 133.53step/s]Training Progress:   1%|          | 1900/330000 [00:16<42:11, 129.61step/s]Training Progress:   1%|          | 1916/330000 [00:16<41:49, 130.75step/s]Training Progress:   1%|          | 1932/330000 [00:16<41:47, 130.85step/s]Training Progress:   1%|          | 1948/330000 [00:16<41:07, 132.96step/s]Training Progress:   1%|          | 1964/330000 [00:16<40:30, 134.95step/s]Training Progress:   1%|          | 1980/330000 [00:16<42:06, 129.86step/s]Training Progress:   1%|          | 1996/330000 [00:16<42:52, 127.50step/s]Training Progress:   1%|          | 2012/330000 [00:16<43:25, 125.90step/s]Training Progress:   1%|          | 2028/330000 [00:17<43:31, 125.60step/s]Training Progress:   1%|          | 2044/330000 [00:17<45:13, 120.87step/s]Training Progress:   1%|          | 2060/330000 [00:17<44:43, 122.20step/s]Training Progress:   1%|          | 2076/330000 [00:17<44:15, 123.47step/s]Training Progress:   1%|          | 2092/330000 [00:17<43:42, 125.03step/s]Training Progress:   1%|          | 2108/330000 [00:17<42:14, 129.37step/s]Training Progress:   1%|          | 2124/330000 [00:17<42:29, 128.59step/s]Training Progress:   1%|          | 2140/330000 [00:17<42:13, 129.43step/s]Training Progress:   1%|          | 2156/330000 [00:18<41:40, 131.09step/s]Training Progress:   1%|          | 2172/330000 [00:18<43:31, 125.55step/s]Training Progress:   1%|          | 2188/330000 [00:18<44:34, 122.56step/s]Training Progress:   1%|          | 2204/330000 [00:18<45:39, 119.65step/s]Training Progress:   1%|          | 2220/330000 [00:18<46:24, 117.73step/s]Training Progress:   1%|          | 2232/330000 [00:18<49:16, 110.86step/s]Training Progress:   1%|          | 2244/330000 [00:18<49:01, 111.41step/s]Training Progress:   1%|          | 2256/330000 [00:18<50:12, 108.80step/s]Training Progress:   1%|          | 2268/330000 [00:19<54:17, 100.61step/s]Training Progress:   1%|          | 2280/330000 [00:19<59:21, 92.03step/s] Training Progress:   1%|          | 2296/330000 [00:19<52:48, 103.43step/s]Training Progress:   1%|          | 2308/330000 [00:19<52:03, 104.90step/s]Training Progress:   1%|          | 2324/330000 [00:19<49:53, 109.46step/s]Training Progress:   1%|          | 2336/330000 [00:19<51:09, 106.76step/s]Training Progress:   1%|          | 2348/330000 [00:19<50:35, 107.96step/s]Training Progress:   1%|          | 2360/330000 [00:19<49:49, 109.61step/s]Training Progress:   1%|          | 2376/330000 [00:20<46:43, 116.85step/s]Training Progress:   1%|          | 2388/330000 [00:20<47:29, 114.99step/s]Training Progress:   1%|          | 2400/330000 [00:20<48:17, 113.08step/s]Training Progress:   1%|          | 2412/330000 [00:20<48:28, 112.61step/s]Training Progress:   1%|          | 2428/330000 [00:20<45:45, 119.29step/s]Training Progress:   1%|          | 2444/330000 [00:20<43:56, 124.24step/s]Training Progress:   1%|          | 2460/330000 [00:20<42:42, 127.82step/s]Training Progress:   1%|          | 2476/330000 [00:20<43:29, 125.52step/s]Training Progress:   1%|          | 2492/330000 [00:21<42:48, 127.49step/s]Training Progress:   1%|          | 2508/330000 [00:21<43:29, 125.48step/s]Training Progress:   1%|          | 2524/330000 [00:21<43:01, 126.84step/s]Training Progress:   1%|          | 2540/330000 [00:21<44:50, 121.72step/s]Training Progress:   1%|          | 2556/330000 [00:21<48:22, 112.82step/s]Training Progress:   1%|          | 2568/330000 [00:21<54:31, 100.10step/s]Training Progress:   1%|          | 2584/330000 [00:21<51:43, 105.51step/s]Training Progress:   1%|          | 2600/330000 [00:22<49:16, 110.74step/s]Training Progress:   1%|          | 2612/330000 [00:22<48:33, 112.37step/s]Training Progress:   1%|          | 2624/330000 [00:22<50:49, 107.36step/s]Training Progress:   1%|          | 2636/330000 [00:22<49:28, 110.28step/s]Training Progress:   1%|          | 2648/330000 [00:22<49:01, 111.29step/s]Training Progress:   1%|          | 2664/330000 [00:22<47:26, 115.01step/s]Training Progress:   1%|          | 2676/330000 [00:22<47:34, 114.67step/s]Training Progress:   1%|          | 2688/330000 [00:22<49:45, 109.64step/s]Training Progress:   1%|          | 2704/330000 [00:22<47:54, 113.86step/s]Training Progress:   1%|          | 2716/330000 [00:23<48:04, 113.45step/s]Training Progress:   1%|          | 2732/330000 [00:23<45:46, 119.18step/s]Training Progress:   1%|          | 2748/330000 [00:23<45:45, 119.20step/s]Training Progress:   1%|          | 2760/330000 [00:23<45:42, 119.32step/s]Training Progress:   1%|          | 2772/330000 [00:23<45:49, 119.03step/s]Training Progress:   1%|          | 2788/330000 [00:23<45:12, 120.63step/s]Training Progress:   1%|          | 2804/330000 [00:23<44:06, 123.65step/s]Training Progress:   1%|          | 2820/330000 [00:23<46:28, 117.33step/s]Training Progress:   1%|          | 2832/330000 [00:24<51:17, 106.29step/s]Training Progress:   1%|          | 2844/330000 [00:24<1:00:06, 90.72step/s]Training Progress:   1%|          | 2856/330000 [00:24<56:26, 96.60step/s]  Training Progress:   1%|          | 2868/330000 [00:24<55:06, 98.92step/s]Training Progress:   1%|          | 2880/330000 [00:24<53:32, 101.82step/s]Training Progress:   1%|          | 2896/330000 [00:24<49:09, 110.92step/s]Training Progress:   1%|          | 2912/330000 [00:24<45:56, 118.68step/s]Training Progress:   1%|          | 2928/330000 [00:24<48:33, 112.24step/s]Training Progress:   1%|          | 2940/330000 [00:25<48:31, 112.33step/s]Training Progress:   1%|          | 2952/330000 [00:25<50:11, 108.60step/s]Training Progress:   1%|          | 2968/330000 [00:25<46:50, 116.37step/s]Training Progress:   1%|          | 2980/330000 [00:25<47:28, 114.82step/s]Training Progress:   1%|          | 2992/330000 [00:25<50:11, 108.59step/s]Training Progress:   1%|          | 3004/330000 [00:25<50:17, 108.36step/s]Training Progress:   1%|          | 3016/330000 [00:25<48:55, 111.38step/s]Training Progress:   1%|          | 3032/330000 [00:25<51:00, 106.83step/s]Training Progress:   1%|          | 3044/330000 [00:26<53:45, 101.37step/s]Training Progress:   1%|          | 3056/330000 [00:26<56:03, 97.20step/s] Training Progress:   1%|          | 3068/330000 [00:26<53:50, 101.22step/s]Training Progress:   1%|          | 3080/330000 [00:26<1:01:14, 88.96step/s]Training Progress:   1%|          | 3092/330000 [00:26<1:28:10, 61.79step/s]Training Progress:   1%|          | 3104/330000 [00:26<1:22:13, 66.25step/s]Training Progress:   1%|          | 3116/330000 [00:27<1:14:00, 73.61step/s]Training Progress:   1%|          | 3128/330000 [00:27<1:08:13, 79.86step/s]Training Progress:   1%|          | 3140/330000 [00:27<1:05:28, 83.21step/s]Training Progress:   1%|          | 3152/330000 [00:27<1:03:29, 85.79step/s]Training Progress:   1%|          | 3164/330000 [00:27<59:10, 92.06step/s]  Training Progress:   1%|          | 3176/330000 [00:27<58:01, 93.89step/s]Training Progress:   1%|          | 3188/330000 [00:27<57:18, 95.04step/s]Training Progress:   1%|          | 3200/330000 [00:27<57:44, 94.33step/s]Training Progress:   1%|          | 3216/330000 [00:28<53:53, 101.07step/s]Training Progress:   1%|          | 3228/330000 [00:28<51:42, 105.34step/s]Training Progress:   1%|          | 3240/330000 [00:28<51:09, 106.46step/s]Training Progress:   1%|          | 3252/330000 [00:28<50:04, 108.76step/s]Training Progress:   1%|          | 3268/330000 [00:28<46:06, 118.12step/s]Training Progress:   1%|          | 3284/330000 [00:28<45:03, 120.85step/s]Training Progress:   1%|1         | 3300/330000 [00:28<46:02, 118.27step/s]Training Progress:   1%|1         | 3312/330000 [00:28<45:52, 118.69step/s]Training Progress:   1%|1         | 3328/330000 [00:29<45:59, 118.37step/s]Training Progress:   1%|1         | 3340/330000 [00:29<48:27, 112.34step/s]Training Progress:   1%|1         | 3352/330000 [00:29<48:36, 112.00step/s]Training Progress:   1%|1         | 3364/330000 [00:29<48:11, 112.97step/s]Training Progress:   1%|1         | 3380/330000 [00:29<46:47, 116.34step/s]Training Progress:   1%|1         | 3396/330000 [00:29<46:11, 117.84step/s]Training Progress:   1%|1         | 3412/330000 [00:29<45:35, 119.37step/s]Training Progress:   1%|1         | 3424/330000 [00:29<45:54, 118.57step/s]Training Progress:   1%|1         | 3440/330000 [00:29<44:28, 122.36step/s]Training Progress:   1%|1         | 3456/330000 [00:30<43:58, 123.74step/s]Training Progress:   1%|1         | 3472/330000 [00:30<45:08, 120.55step/s]Training Progress:   1%|1         | 3488/330000 [00:30<45:26, 119.76step/s]Training Progress:   1%|1         | 3504/330000 [00:30<43:26, 125.27step/s]Training Progress:   1%|1         | 3520/330000 [00:30<45:31, 119.51step/s]Training Progress:   1%|1         | 3536/330000 [00:30<48:15, 112.75step/s]Training Progress:   1%|1         | 3552/330000 [00:30<47:23, 114.80step/s]Training Progress:   1%|1         | 3564/330000 [00:31<46:53, 116.01step/s]Training Progress:   1%|1         | 3580/330000 [00:31<45:09, 120.49step/s]Training Progress:   1%|1         | 3596/330000 [00:31<46:14, 117.66step/s]keepalive ping failed
+Traceback (most recent call last):
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\websockets\asyncio\connection.py", line 844, in keepalive
+    async with self.send_context():
+  File "C:\Users\mtgra\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 199, in __aenter__
+    return await anext(self.gen)
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\websockets\asyncio\connection.py", line 965, in send_context
+    raise self.protocol.close_exc from original_exc
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+keepalive ping failed
+Traceback (most recent call last):
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\websockets\asyncio\connection.py", line 844, in keepalive
+    async with self.send_context():
+  File "C:\Users\mtgra\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 199, in __aenter__
+    return await anext(self.gen)
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\websockets\asyncio\connection.py", line 965, in send_context
+    raise self.protocol.close_exc from original_exc
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+keepalive ping failed
+Traceback (most recent call last):
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\websockets\asyncio\connection.py", line 844, in keepalive
+    async with self.send_context():
+  File "C:\Users\mtgra\AppData\Local\Programs\Python\Python310\lib\contextlib.py", line 199, in __aenter__
+    return await anext(self.gen)
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\websockets\asyncio\connection.py", line 965, in send_context
+    raise self.protocol.close_exc from original_exc
+websockets.exceptions.ConnectionClosedError: no close frame received or sent
+Training Progress:   1%|1         | 3608/330000 [00:31<54:32, 99.74step/s] Training Progress:   1%|1         | 3620/330000 [00:31<53:32, 101.59step/s]Training Progress:   1%|1         | 3632/330000 [00:31<53:31, 101.61step/s]Training Progress:   1%|1         | 3644/330000 [00:31<53:44, 101.20step/s]Traceback (most recent call last):
+  File "C:\Users\mtgra\AppData\Local\Programs\Python\Python310\lib\multiprocessing\connection.py", line 312, in _recv_bytes
+    nread, err = ov.GetOverlappedResult(True)
+BrokenPipeError: [WinError 109] The pipe has been ended
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\v2\baseline_fast_v2.py", line 257, in <module>
+    model.learn(total_timesteps=total_timesteps, callback=CallbackList(callbacks + [progress_callback]), tb_log_name="poke_ppo")
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\ppo\ppo.py", line 311, in learn
+    return super().learn(
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 324, in learn
+    continue_training = self.collect_rollouts(self.env, callback, self.rollout_buffer, n_rollout_steps=self.n_steps)
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\common\on_policy_algorithm.py", line 218, in collect_rollouts
+    new_obs, rewards, dones, infos = env.step(clipped_actions)
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\common\vec_env\base_vec_env.py", line 222, in step
+    return self.step_wait()
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\common\vec_env\vec_transpose.py", line 97, in step_wait
+    observations, rewards, dones, infos = self.venv.step_wait()
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\common\vec_env\subproc_vec_env.py", line 137, in step_wait
+    results = [remote.recv() for remote in self.remotes]
+  File "C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\lib\site-packages\stable_baselines3\common\vec_env\subproc_vec_env.py", line 137, in <listcomp>
+    results = [remote.recv() for remote in self.remotes]
+  File "C:\Users\mtgra\AppData\Local\Programs\Python\Python310\lib\multiprocessing\connection.py", line 250, in recv
+    buf = self._recv_bytes()
+  File "C:\Users\mtgra\AppData\Local\Programs\Python\Python310\lib\multiprocessing\connection.py", line 321, in _recv_bytes
+    raise EOFError
+EOFError

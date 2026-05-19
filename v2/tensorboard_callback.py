@@ -66,6 +66,27 @@ class TensorboardCallback(BaseCallback):
             merged_flags = {k: v for d in list_of_flag_dicts for k, v in d.items()}
             self.logger.record("trajectory/all_flags", json.dumps(merged_flags))
 
+            # Discovered events (RAM bit-flip mining) as JSON for debugging/comparison.
+            try:
+                discovered_lists = self.training_env.get_attr("discovered_events")
+                merged_discovered = {}
+                for d in discovered_lists:
+                    if isinstance(d, dict):
+                        merged_discovered.update(d)
+                # Keep payload bounded: log only up to 500 ids (sorted by first_step if available).
+                items = list(merged_discovered.values())
+                try:
+                    items.sort(key=lambda e: int(e.get("first_step", 0)))
+                except Exception:
+                    pass
+                payload = {
+                    "count": len(items),
+                    "events": items[:500],
+                }
+                self.logger.record("trajectory/discovered_events", json.dumps(payload))
+            except Exception:
+                pass
+
         return True
     
     def _on_training_end(self):

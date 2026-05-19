@@ -1,0 +1,43 @@
+#TO START A NEW SWEEP
+
+python run_iterative_compare_v2.py --max-parallel-modes 1 --base-tag fair_fast --root-base-dir sweeps --stages 6 --stage-hours-0 4 --stage-hours-rest 2 --initial-runs 10 --initial-max-parallel 2 --seeds 0,1,2,3,4,5,6,7,8,9 --continue-runs 1 --num-cpu 4 --device cuda --no-stream
+
+
+#TO RESUME A GIVEN SWEEP
+
+python run_iterative_compare_v2.py --max-parallel-modes 1 --base-tag fair_fast --resume --root-base-dir sweeps --stages 6 --stage-hours-0 4 --stage-hours-rest 2 --initial-runs 10 --initial-max-parallel 2 --seeds 0,1,2,3,4,5,6,7,8,9 --continue-runs 1 --num-cpu 4 --device cuda --no-stream
+
+
+#INPUT JITTER EVAL (best checkpoint from a completed sweep)
+# Manual (after sweep completes):
+#   python scripts/eval_input_jitter_best_v2.py sweeps/<your_sweep_folder> --jitter-prob 0.1 --jitter-mode lag --episodes 1
+#
+# Automatic (run eval right after sweep):
+#   python scripts/run_sweep_v2.py --runs 10 --seed-start 0 --num-cpu 4 --device auto --no-stream --eval-input-jitter-after --eval-input-jitter-prob 0.1 --eval-input-jitter-mode lag
+
+
+#PERCEPTION NOISE EVAL (best checkpoint from a completed sweep)
+# Manual (after sweep completes):
+#   python scripts/eval_perception_noise_best_v2.py sweeps/<your_sweep_folder> --noise-radii 0,1,2,4,8 --noise-mode uniform --episodes 1
+#
+# Automatic (run eval right after sweep):
+#   python scripts/run_sweep_v2.py --runs 10 --seed-start 0 --num-cpu 4 --device auto --no-stream --eval-perception-noise-after --eval-perception-noise-radii 0,1,2,4,8 --eval-perception-noise-mode uniform
+
+
+
+
+#FULL AUTO WITH POST EVALS 
+.\.venv\Scripts\python.exe scripts\run_sweep_v2.py --runs 50 --num-cpu 8 --device auto --no-stream --stdout-gzip
+
+
+# FULL AUTO WITH base (not convinced this works yet)
+.\.venv\Scripts\python.exe scripts\run_four_configs_v2.py --out-dir sweeps_four --ep-length 256 --total-timesteps 1000 --num-cpu 1 --headless
+
+
+
+##################USED OVERNIGHT RUN 10 BASE runs###########################
+.\.venv\Scripts\python.exe scripts\run_sweep_v2.py --runs 10 --seed-start 0 --num-cpu 4 --max-parallel 1 --total-timesteps 330000 --device auto --no-stream --stdout-gzip --stdout-gzip-level 6 --eval-input-jitter-after --eval-input-jitter-prob 0.1 --eval-input-jitter-mode lag --eval-perception-noise-after --eval-perception-noise-radii 0,1,2,4,8 --eval-perception-noise-mode uniform
+
+
+###################### 10 runs for each variant config for compare + post evals
+######################.\run_four_sweeps_sequential.ps1

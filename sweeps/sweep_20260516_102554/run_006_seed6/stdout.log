@@ -1,0 +1,4 @@
+COMMAND:
+C:\Users\mtgra\Desktop\Masters\SP26\Reinforcement Learning\PokemonRedExperiments\.venv\Scripts\python.exe v2\baseline_fast_v2.py --run-dir sweeps\sweep_20260516_102554\run_006_seed6 --seed 6 --num-cpu 4 --ep-length 163840 --total-timesteps 330000 --train-steps-batch 0 --action-freq 24 --init-state init.state --gb-path PokemonRed.gb --headless --reward-scale 0.5 --explore-weight 0.25 --batch-size 512 --n-epochs 1 --gamma 0.997 --ent-coef 0.01 --device auto --no-stream --stream-user v2-default --stream-color #447799 --stream-extra  --no-wandb
+
+NOTE: Full stdout/stderr is stored in stdout.log.gz (gzip, lossless).

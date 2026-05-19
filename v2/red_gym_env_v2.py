@@ -1,8 +1,10 @@
 import uuid
 import json
 from pathlib import Path
+from typing import Dict, Optional, Tuple
 
 import numpy as np
+import pandas as pd
 from skimage.transform import downscale_local_mean
 import matplotlib.pyplot as plt
 from pyboy import PyBoy
@@ -13,7 +15,7 @@ from einops import repeat
 from gymnasium import Env, spaces
 from pyboy.utils import WindowEvent
 
-from global_map import local_to_global, GLOBAL_MAP_SHAPE
+from global_map import local_to_global, GLOBAL_MAP_SHAPE, VALID_TILE_MASK
 
 event_flags_start = 0xD747
 event_flags_end = 0xD87E # expand for SS Anne # old - 0xD7F6 
@@ -57,6 +59,8 @@ class RedGymEnv(Env):
         self.max_steps = config["max_steps"]
         self.save_video = config["save_video"]
         self.fast_video = config["fast_video"]
+        self.save_trajectory = bool(config.get("save_trajectory", False))
+        self.trajectory_flush_every = int(config.get("trajectory_flush_every", 0))
         self.frame_stacks = 3
         self.explore_weight = (
             1 if "explore_weight" not in config else config["explore_weight"]
@@ -69,6 +73,14 @@ class RedGymEnv(Env):
             if "instance_id" not in config
             else config["instance_id"]
         )
+        self.trajectory_path = None
+        if self.save_trajectory:
+            try:
+                instance_num = int(self.instance_id)
+                traj_name = "trajectory.csv.gz" if instance_num == 0 else f"trajectory_worker_{instance_num}.csv.gz"
+            except Exception:
+                traj_name = f"trajectory_{self.instance_id}.csv.gz"
+            self.trajectory_path = self.s_path / traj_name
         self.s_path.mkdir(exist_ok=True)
         self.full_frame_writer = None
         self.model_frame_writer = None
@@ -119,6 +131,34 @@ class RedGymEnv(Env):
         
         self.enc_freqs = 8
 
+        # Input jitter (action noise) for robustness experiments
+        self.input_jitter_enable = bool(config.get("input_jitter_enable", False))
+        self.input_jitter_prob = float(config.get("input_jitter_prob", 0.0))
+        self.input_jitter_mode = str(config.get("input_jitter_mode", "lag")).strip().lower()
+
+        # Perception noise (sensor error) applied to the *observed* position/map crop
+        # This perturbs only the explore-map observation, not the underlying game state or reward.
+        self.perception_noise_enable = bool(config.get("perception_noise_enable", False))
+        self.perception_noise_radius = int(config.get("perception_noise_radius", 0))
+        self.perception_noise_mode = str(config.get("perception_noise_mode", "uniform")).strip().lower()
+
+        # Discovered-events (RAM bit-flip mining)
+        self.discovered_events_enable = bool(config.get("discovered_events_enable", False))
+        # List of (start, end) address ranges (inclusive start, exclusive end), or default to event-flag region.
+        self.discovered_events_ranges = config.get(
+            "discovered_events_ranges",
+            [(event_flags_start, event_flags_end)],
+        )
+        self.discovered_events_min_address = int(config.get("discovered_events_min_address", 0))
+        self.discovered_events_max_address = int(config.get("discovered_events_max_address", 0x10000))
+        self.discovered_events_flush_every = int(config.get("discovered_events_flush_every", 500))
+
+        # Promoted events file (frozen shaping list for this run)
+        promoted_path = str(config.get("discovered_events_promoted_path", "")).strip()
+        self.discovered_events_promoted_path = promoted_path
+        self.discovered_events_reward_weight = float(config.get("discovered_events_reward_weight", 0.0))
+        self.promoted_discovered_events: Dict[str, float] = {}
+
         self.observation_space = spaces.Dict(
             {
                 "screens": spaces.Box(low=0, high=255, shape=self.output_shape, dtype=np.uint8),
@@ -147,8 +187,30 @@ class RedGymEnv(Env):
         if not config["headless"]:
             self.pyboy.set_emulation_speed(6)
 
+        # Load promoted discovered events (frozen shaping list)
+        if self.discovered_events_promoted_path:
+            try:
+                promoted = json.loads(Path(self.discovered_events_promoted_path).read_text(encoding="utf-8"))
+                events = promoted.get("events", []) if isinstance(promoted, dict) else []
+                for item in events:
+                    if not isinstance(item, dict):
+                        continue
+                    eid = str(item.get("id", "")).strip()
+                    w = float(item.get("weight", 1.0))
+                    if eid:
+                        self.promoted_discovered_events[eid] = w
+            except Exception:
+                # If the file isn't readable, just run without shaping.
+                self.promoted_discovered_events = {}
+
     def reset(self, seed=None, options={}):
         self.seed = seed
+        # RNG for deterministic jitter across runs (seed provided by SubprocVecEnv)
+        try:
+            self._rng = np.random.default_rng(seed)
+        except Exception:
+            self._rng = np.random.default_rng(None)
+
         # restart game, skipping credits
         with open(self.init_state, "rb") as f:
             self.pyboy.load_state(f)
@@ -159,10 +221,16 @@ class RedGymEnv(Env):
 
         self.explore_map_dim = GLOBAL_MAP_SHAPE
         self.explore_map = np.zeros(self.explore_map_dim, dtype=np.uint8)
+        self.valid_tile_mask = VALID_TILE_MASK
 
         self.recent_screens = np.zeros( self.output_shape, dtype=np.uint8)
         
         self.recent_actions = np.zeros((self.frame_stacks,), dtype=np.uint8)
+
+        # Jitter bookkeeping
+        self._prev_action = 0
+        self.input_jitter_count = 0
+        self.input_jitter_last_applied = False
 
         self.levels_satisfied = False
         self.base_explore = 0
@@ -187,6 +255,13 @@ class RedGymEnv(Env):
 
         self.current_event_flags_set = {}
 
+        # Discovered-events state
+        self.discovered_events: Dict[str, Dict] = {}
+        self._discovered_prev_bytes: Optional[Dict[int, int]] = None
+        self.discovered_event_reward_total = 0.0
+        self.discovered_event_reward_max = 0.0
+        self.discovered_events_last_flush_step = 0
+
         # experiment! 
         # self.max_steps += 128
 
@@ -195,6 +270,57 @@ class RedGymEnv(Env):
         self.total_reward = sum([val for _, val in self.progress_reward.items()])
         self.reset_count += 1
         return self._get_obs(), {}
+
+    def flush_trajectory(self):
+        if not self.save_trajectory or self.trajectory_path is None or not self.agent_stats:
+            return
+        try:
+            df = pd.DataFrame(self.agent_stats)
+            tmp_path = self.trajectory_path.with_name(self.trajectory_path.name + ".tmp")
+            df.to_csv(tmp_path, index=False, compression="gzip")
+            tmp_path.replace(self.trajectory_path)
+        except Exception:
+            pass
+
+    def _apply_input_jitter(self, action: int) -> Tuple[int, bool]:
+        """Optionally perturb the chosen action to simulate input lag/drift.
+
+        Returns (applied_action, jitter_applied).
+        """
+        if not self.input_jitter_enable:
+            return action, False
+        p = float(self.input_jitter_prob)
+        if p <= 0:
+            return action, False
+
+        # Decide whether to apply jitter this step
+        if float(self._rng.random()) >= p:
+            return action, False
+
+        mode = self.input_jitter_mode
+
+        # Default: lag/sticky (repeat previous action)
+        if mode in ("lag", "sticky", "repeat"):
+            return int(self._prev_action), True
+
+        # Drift: if moving, randomly change direction
+        if mode in ("drift", "direction"):
+            # Arrow actions are indices 0..3 in valid_actions
+            if 0 <= int(action) <= 3:
+                choices = [0, 1, 2, 3]
+                try:
+                    choices.remove(int(action))
+                except Exception:
+                    pass
+                return int(self._rng.choice(choices)), True
+            return action, False
+
+        # Random: replace with a random valid action
+        if mode in ("random", "rand"):
+            return int(self._rng.integers(0, len(self.valid_actions))), True
+
+        # Unknown mode -> fall back to lag
+        return int(self._prev_action), True
 
     def init_map_mem(self):
         self.seen_coords = {}
@@ -232,13 +358,29 @@ class RedGymEnv(Env):
 
     def step(self, action):
 
+        action = int(action)
+
         if self.save_video and self.step_count == 0:
             self.start_video()
 
-        self.run_action_on_emulator(action)
-        self.append_agent_stats(action)
+        requested_action = action
+        applied_action, jitter_applied = self._apply_input_jitter(action)
+        self.input_jitter_last_applied = bool(jitter_applied)
+        if jitter_applied:
+            self.input_jitter_count += 1
 
-        self.update_recent_actions(action)
+        self.run_action_on_emulator(applied_action)
+        self.append_agent_stats(applied_action)
+
+        # Track both requested and applied actions
+        if self.agent_stats:
+            self.agent_stats[-1]["requested_action"] = int(requested_action)
+            self.agent_stats[-1]["applied_action"] = int(applied_action)
+            self.agent_stats[-1]["input_jitter_applied"] = int(bool(jitter_applied))
+            self.agent_stats[-1]["input_jitter_count"] = int(self.input_jitter_count)
+
+        self.update_recent_actions(applied_action)
+        self._prev_action = int(applied_action)
 
         self.update_seen_coords()
 
@@ -278,7 +420,83 @@ class RedGymEnv(Env):
 
         self.step_count += 1
 
+        if self.save_trajectory and self.trajectory_path is not None:
+            if step_limit_reached or (self.trajectory_flush_every > 0 and self.step_count % self.trajectory_flush_every == 0):
+                self.flush_trajectory()
+
+        # Discovered-events: update after step_count increments and flush periodically
+        if self.discovered_events_enable:
+            self.update_discovered_events()
+            if self.discovered_events_flush_every > 0 and (self.step_count - self.discovered_events_last_flush_step) >= self.discovered_events_flush_every:
+                self.flush_discovered_events()
+                self.discovered_events_last_flush_step = self.step_count
+            if step_limit_reached:
+                self.flush_discovered_events()
+
         return obs, new_reward, False, step_limit_reached, {}
+
+    def _iter_discovery_addresses(self):
+        for start, end in self.discovered_events_ranges:
+            s = max(int(start), self.discovered_events_min_address)
+            e = min(int(end), self.discovered_events_max_address)
+            for addr in range(s, e):
+                yield addr
+
+    def update_discovered_events(self) -> None:
+        """Mine 'events' as RAM bit flips (0->1) across configured address ranges.
+
+        We store them as metrics and (optionally) use *promoted* discovered events as shaping.
+        """
+        # Build prev snapshot on first call
+        if self._discovered_prev_bytes is None:
+            self._discovered_prev_bytes = {addr: int(self.read_m(addr)) for addr in self._iter_discovery_addresses()}
+            return
+
+        prev = self._discovered_prev_bytes
+        for addr in list(prev.keys()):
+            cur = int(self.read_m(addr))
+            old = int(prev[addr])
+            if cur == old:
+                continue
+            # Detect 0->1 bit flips
+            flipped_on = (~old) & cur
+            if flipped_on:
+                for bit in range(8):
+                    if flipped_on & (1 << bit):
+                        eid = f"bit:0x{addr:04X}:{bit}"
+                        if eid not in self.discovered_events:
+                            self.discovered_events[eid] = {
+                                "id": eid,
+                                "addr": int(addr),
+                                "bit": int(bit),
+                                "first_step": int(self.step_count),
+                            }
+                            # Optional shaping (only for promoted list, to keep reward stable per stage)
+                            if self.discovered_events_reward_weight > 0 and eid in self.promoted_discovered_events:
+                                self.discovered_event_reward_total += (
+                                    float(self.discovered_events_reward_weight) * float(self.promoted_discovered_events[eid])
+                                )
+
+            prev[addr] = cur
+
+        # Track a non-decreasing shaping component (max over time)
+        self.discovered_event_reward_max = max(self.discovered_event_reward_max, float(self.discovered_event_reward_total))
+
+    def flush_discovered_events(self) -> None:
+        """Write a lossless snapshot to <run_dir>/discovered_events_env<id>.json.
+
+        This is overwritten each flush so orchestration scripts can read partial progress.
+        """
+        try:
+            out_path = self.s_path / Path(f"discovered_events_env{self.instance_id}.json")
+            payload = {
+                "step": int(self.step_count),
+                "count": int(len(self.discovered_events)),
+                "events": sorted(self.discovered_events.values(), key=lambda e: int(e.get("first_step", 0))),
+            }
+            out_path.write_text(json.dumps(payload, indent=2), encoding="utf-8")
+        except Exception:
+            pass
     
     def run_action_on_emulator(self, action):
         # press button then release after some steps
@@ -298,6 +516,11 @@ class RedGymEnv(Env):
         levels = [
             self.read_m(a) for a in [0xD18C, 0xD1B8, 0xD1E4, 0xD210, 0xD23C, 0xD268]
         ]
+        explore_tiles = int(((self.explore_map > 0) & self.valid_tile_mask).sum())
+        total_tiles = int(self.valid_tile_mask.sum())
+        explore_pct = 100.0 * explore_tiles / float(max(total_tiles, 1))
+        events_completed = int(self.get_all_events_reward())
+        game_completion_score = int(self.get_game_completion_score())
         self.agent_stats.append(
             {
                 "step": self.step_count,
@@ -309,13 +532,26 @@ class RedGymEnv(Env):
                 "pcount": self.read_m(0xD163),
                 "levels": levels,
                 "levels_sum": sum(levels),
+                "max_level": int(max(levels) if levels else 0),
                 "ptypes": self.read_party(),
                 "hp": self.read_hp_fraction(),
                 "coord_count": len(self.seen_coords),
+                "explore_tiles": explore_tiles,
+                "explore_total_tiles": total_tiles,
+                "explore_pct": explore_pct,
                 "deaths": self.died_count,
                 "badge": self.get_badges(),
+                "events_completed": events_completed,
+                "game_completion_score": game_completion_score,
+                "game_completion_max": int(self.max_game_completion_score),
                 "event": self.progress_reward["event"],
                 "healr": self.total_healing_rew,
+                "discovered_event_count": int(len(self.discovered_events)) if self.discovered_events_enable else 0,
+                "discovered_event_reward": float(self.discovered_event_reward_max) if self.discovered_events_enable else 0.0,
+                "input_jitter_enable": int(bool(self.input_jitter_enable)),
+                "input_jitter_prob": float(self.input_jitter_prob),
+                "input_jitter_mode": str(self.input_jitter_mode),
+                "input_jitter_count": int(getattr(self, "input_jitter_count", 0)),
             }
         )
 
@@ -402,6 +638,17 @@ class RedGymEnv(Env):
 
     def get_explore_map(self):
         c = self.get_global_coords()
+        if self.perception_noise_enable and int(self.perception_noise_radius) > 0:
+            r = int(self.perception_noise_radius)
+            mode = self.perception_noise_mode
+            if mode == "normal":
+                dy = int(self._rng.normal(0.0, float(r)))
+                dx = int(self._rng.normal(0.0, float(r)))
+            else:
+                # uniform integer noise in [-r, r]
+                dy = int(self._rng.integers(-r, r + 1))
+                dx = int(self._rng.integers(-r, r + 1))
+            c = (int(c[0]) + dy, int(c[1]) + dx)
         if c[0] >= self.explore_map.shape[0] or c[1] >= self.explore_map.shape[1]:
             out = np.zeros((self.coords_pad*2, self.coords_pad*2), dtype=np.uint8)
         else:
@@ -574,6 +821,7 @@ class RedGymEnv(Env):
             "op_damage": self.reward_scale * self.opponent_damage_reward * 2,
             "level_pen": self.reward_scale * self.level_penalty_total * -0.5,
             "game_progress": self.reward_scale * self.update_game_completion_rew() * 5,
+            "discovered": self.reward_scale * float(self.discovered_event_reward_max),
         }
 
         return state_scores
